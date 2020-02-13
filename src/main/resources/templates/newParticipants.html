@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns=http://www.w3.org/1999/xhtml xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Add a participant</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+      <h1>Create a Person:</h1>
+       
+      <!--  
+         In Thymeleaf the equivalent of
+         JSP's ${pageContext.request.contextPath}/edit.html
+         would be @{/edit.html}         
+         -->
+          
+      <form th:action="@{/participants/addParticipant}"
+         th:object="${personForm}" method="POST">
+         First Name:
+         <input type="text" th:field="*{prenom}" />    
+         <br/>
+         Last Name:
+         <input type="text" th:field="*{nom}" />     
+         <br/>
+         Email:
+         <input type="text" th:field="*{email}" />     
+         <br/>
+         Evenement : 
+         <div th:object="${eventForm}">
+         <select class="form-control" th:field="*{id}">
+            <option th:each="ev : ${evenements}" th:value="${ev.id}" th:text="${ev.intitule}"></option>
+        </select>
+         </div>
+         <br/>
+         <input type="submit" value="Create" />
+      </form>
+       
+       
+   </body>
+</html>

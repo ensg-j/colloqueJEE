@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns=http://www.w3.org/1999/xhtml xmlns:th="http://www.thymeleaf.org">
+    
+    <head>
+        <title>Participants</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <table border="1">
+        <tr>
+            <th>Nom</th>
+            <th>Prenom</th>
+        </tr>
+        <tr th:each="p : ${participants}">
+            <td th:utext="${p.nom}">..</td>
+            <td th:utext="${p.prenom}">..</td>
+            <td th:utext="${p.email}">..</td>
+            <td th:utext="${p.evenement.intitule}">..</td>
+            <td><form th:action="@{delete/__${p.num_personn}__}">
+                <button>Supprimer</button>
+             </form></td>
+            <td><form th:action="@{updateForm/__${p.num_personn}__}">
+                <button>Modifier</button>
+             </form></td>
+        </tr>
+ 
+    </table>
+        Ajouter un nouveau participant :  <a href="/participants/addParticipant">ici</a>
+    </body>
+</html>
