@@ -20,6 +20,12 @@ and open the template in the editor.
         <tr th:each="ev : ${allEvents}">
             <td th:utext="${ev.intitule}">..</td>
             <td th:utext="${ev.theme}">..</td>
+            <td><form th:action="@{delete/__${ev.id}__}">
+                <button>Supprimer</button>
+             </form></td>
+            <td><form th:action="@{updateForm/__${ev.id}__}">
+                <button>Modifier</button>
+             </form></td>
         </tr>
  
     </table>

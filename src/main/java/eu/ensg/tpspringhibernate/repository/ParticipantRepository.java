@@ -5,7 +5,9 @@
  */
 package eu.ensg.tpspringhibernate.repository;
 
+import eu.ensg.tpspringhibernate.model.Evenement;
 import eu.ensg.tpspringhibernate.model.Participant;
+import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -13,5 +15,6 @@ import org.springframework.data.repository.CrudRepository;
  * @author formation
  */
 public interface ParticipantRepository extends CrudRepository<Participant, Integer> {
+    List<Participant> findByEvenement(Evenement ev);
     
 }

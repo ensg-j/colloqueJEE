@@ -10,6 +10,7 @@ import eu.ensg.tpspringhibernate.model.Evenement;
 import eu.ensg.tpspringhibernate.model.Participant;
 import eu.ensg.tpspringhibernate.repository.EvenementRepository;
 import eu.ensg.tpspringhibernate.repository.ParticipantRepository;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -119,5 +120,35 @@ public class GlobalController {
  
         model.addAttribute("errorMessage", "Erreur");
         return "newEvents";
+    }
+    
+    
+    @GetMapping("/events/updateForm/{id}")
+    public String showUpdateEventsPage(Model model,@PathVariable int id) {
+        Evenement event = eventRepository.findById(id).get();
+        model.addAttribute("eventForm", event); 
+        return "updateEvent";
+    }
+    
+    @PostMapping("/events/update/{id}")
+    public String updateEvent(Model model, //
+            @ModelAttribute("eventForm") Evenement event,
+            @PathVariable int id){
+        Evenement ev = eventRepository.findById(id).get();
+        ev.setIntitule(event.getIntitule());
+        ev.setTheme(event.getTheme());
+        eventRepository.save(ev);
+        return "redirect:/events/all";
+    }
+    
+    @GetMapping("/events/delete/{id}")
+    public String removeEvent(@PathVariable int id){
+        Evenement ev = eventRepository.findById(id).get();
+        List<Participant> list_participants = participantsRepository.findByEvenement(ev);
+        for (Participant p : list_participants){
+            participantsRepository.delete(p);
+        }
+        eventRepository.delete(ev);
+        return "redirect:/events/all";
     }
 }
